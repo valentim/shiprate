@@ -1,5 +1,6 @@
 package shipping
 
+// StandardRates returns the Calculator with the current rules and prices.
 func StandardRates() *Calculator {
 	return NewCalculator(
 		WeightTiers{

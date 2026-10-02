@@ -47,6 +47,15 @@ func TestStandardRatesTotal(t *testing.T) {
 	}
 }
 
+func TestStandardRatesPricesEveryZone(t *testing.T) {
+	calc := StandardRates()
+	for _, zone := range zones {
+		if _, err := calc.Quote(parcel(1, zone)); err != nil {
+			t.Errorf("Quote() for zone %q error = %v", zone, err)
+		}
+	}
+}
+
 func TestStandardRatesBreakdown(t *testing.T) {
 	quote, err := StandardRates().Quote(parcel(3, ZoneEU))
 	if err != nil {

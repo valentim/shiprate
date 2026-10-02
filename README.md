@@ -62,4 +62,6 @@ would need a change to the `Rule` interface.
 - Length, width and height are required because a parcel has them, but they do
   not change the price.
 - The zone can be typed in any letter case (`EU`, `eu`).
+- The weight tiers in `rates.go` are listed from the lowest limit to the
+  highest, and a parcel pays the first tier it fits in.
 - Amounts are kept in integer cents.

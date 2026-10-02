@@ -6,8 +6,10 @@ import (
 	"slices"
 )
 
+// Zone is the destination zone of a parcel.
 type Zone string
 
+// The zones a parcel can be sent to.
 const (
 	ZoneDomestic      Zone = "domestic"
 	ZoneEU            Zone = "eu"
@@ -16,6 +18,7 @@ const (
 
 var zones = []Zone{ZoneDomestic, ZoneEU, ZoneInternational}
 
+// Parcel is a parcel to be priced.
 type Parcel struct {
 	WeightKg float64
 	LengthCm float64
@@ -24,6 +27,8 @@ type Parcel struct {
 	Zone     Zone
 }
 
+// Validate returns an error if a measurement is not a positive number or the
+// zone is unknown.
 func (p Parcel) Validate() error {
 	measurements := []struct {
 		name  string
