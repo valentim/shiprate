@@ -29,7 +29,7 @@ func TestRunPrintsQuote(t *testing.T) {
 	}
 }
 
-func TestRunAcceptsZoneInAnyCase(t *testing.T) {
+func TestRunNormalisesZone(t *testing.T) {
 	for _, zone := range []string{"EU", "Eu", "eU", " eu ", "\tEU\n"} {
 		t.Run(zone, func(t *testing.T) {
 			var stdout, stderr bytes.Buffer
@@ -68,9 +68,11 @@ func TestRunRejectsBadInput(t *testing.T) {
 		{"unknown zone", parcelArgs("3", "mars"), `unknown zone "mars", valid zones are [domestic eu international]`},
 		{"misspelt zone", parcelArgs("3", "internationl"), `unknown zone "internationl"`},
 		{"zone with a space inside", parcelArgs("3", "inter national"), `unknown zone "inter national"`},
+		{"empty zone", parcelArgs("3", ""), `unknown zone ""`},
 		{"negative weight", parcelArgs("-3", "eu"), "weight must be a positive number"},
 		{"negative height", []string{"-weight", "3", "-length", "30", "-width", "20", "-height", "-10", "-zone", "eu"}, "height must be a positive number"},
 		{"weight is not a number", parcelArgs("heavy", "eu"), "invalid value"},
+		{"weight with a decimal comma", parcelArgs("3,5", "eu"), `invalid value "3,5"`},
 		{"unknown flag", append(parcelArgs("3", "eu"), "-express"), "flag provided but not defined"},
 		{"positional argument", append(parcelArgs("3", "eu"), "extra"), `unexpected argument "extra"`},
 	}

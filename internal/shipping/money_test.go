@@ -12,6 +12,7 @@ func TestMoneyString(t *testing.T) {
 		{EUR(18), "18.00"},
 		{1805, "18.05"},
 		{-250, "-2.50"},
+		{-5, "-0.05"},
 	}
 	for _, tt := range tests {
 		if got := tt.amount.String(); got != tt.want {
